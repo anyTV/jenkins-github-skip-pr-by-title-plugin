@@ -97,7 +97,10 @@ public class GitHubPullRequestSkipTrait extends SCMSourceTrait {
 
             if (scmHead instanceof PullRequestSCMHead) {
                 GHRepository repository = ((GitHubSCMSourceRequest) scmSourceRequest).getRepository();
+
+                // name for pull requests are formatted as "PR-<number>"
                 int prNumber = Integer.parseInt(scmHead.getName().substring(3));
+
                 GHPullRequest pull = repository.getPullRequest(prNumber);
                 String title = pull.getTitle().toLowerCase();
 
