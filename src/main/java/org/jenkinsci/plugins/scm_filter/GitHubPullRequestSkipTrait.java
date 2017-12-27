@@ -77,7 +77,8 @@ public class GitHubPullRequestSkipTrait extends SCMSourceTrait {
 
 
     /**
-     * Filter that excludes pull requests according to its PR title (if it contains [ci skip] or [skip ci], case insensitive).
+     * Filter that excludes pull requests according to its PR title
+     * if it contains [ci skip], [skip ci], or [wip], case insensitive.
      */
     public static class ExcludePRsSCMHeadFilter extends SCMHeadFilter {
 
@@ -102,7 +103,7 @@ public class GitHubPullRequestSkipTrait extends SCMSourceTrait {
 
                     if (prName.equals("PR-" + pull.getNumber())) {
                         String title = pull.getTitle().toLowerCase();
-                        return title.contains("[ci skip]") || title.contains("[skip ci]");
+                        return title.contains("[ci skip]") || title.contains("[skip ci]") || title.contains("[wip]");
                     }
                 }
             }
