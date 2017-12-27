@@ -15,11 +15,11 @@ import org.jenkinsci.plugins.github_branch_source.GitHubSCMSourceRequest;
 import org.jenkinsci.plugins.github_branch_source.PullRequestSCMHead;
 
 import org.kohsuke.github.GHPullRequest;
+import org.kohsuke.github.GHRepository;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
-import java.util.Iterator;
 
 
 public class GitHubPullRequestSkipTrait extends SCMSourceTrait {
@@ -94,18 +94,14 @@ public class GitHubPullRequestSkipTrait extends SCMSourceTrait {
         ) throws IOException, InterruptedException {
 
             if (scmHead instanceof PullRequestSCMHead) {
-                Iterable<GHPullRequest> pulls = ((GitHubSCMSourceRequest) scmSourceRequest).getPullRequests();
-                Iterator<GHPullRequest> pullIterator = pulls.iterator();
-                String prName = scmHead.getName();
+                GHRepository repository = ((GitHubSCMSourceRequest) scmSourceRequest).getRepository();
+                int prNumber = Integer.parseInt(scmHead.getName().substring(3));
+                GHPullRequest pull = repository.getPullRequest(prNumber);
+                String title = pull.getTitle().toLowerCase();
 
-                while (pullIterator.hasNext()) {
-                    GHPullRequest pull = pullIterator.next();
-
-                    if (prName.equals("PR-" + pull.getNumber())) {
-                        String title = pull.getTitle().toLowerCase();
-                        return title.contains("[ci skip]") || title.contains("[skip ci]") || title.contains("[wip]");
-                    }
-                }
+                return title.contains("[ci skip]")
+                        || title.contains("[skip ci]")
+                        || title.contains("[wip]");
             }
 
             return false;
