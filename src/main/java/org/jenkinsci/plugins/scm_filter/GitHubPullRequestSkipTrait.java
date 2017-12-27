@@ -20,6 +20,7 @@ import org.kohsuke.stapler.DataBoundConstructor;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 
 public class GitHubPullRequestSkipTrait extends SCMSourceTrait {
@@ -79,6 +80,7 @@ public class GitHubPullRequestSkipTrait extends SCMSourceTrait {
     /**
      * Filter that excludes pull requests according to its PR title
      * if it contains [ci skip], [skip ci], or [wip], case insensitive.
+     * The words "ci" and "skip" can be separated by either a dash, an underscore, or a single space.
      */
     public static class ExcludePRsSCMHeadFilter extends SCMHeadFilter {
 
@@ -99,9 +101,8 @@ public class GitHubPullRequestSkipTrait extends SCMSourceTrait {
                 GHPullRequest pull = repository.getPullRequest(prNumber);
                 String title = pull.getTitle().toLowerCase();
 
-                return title.contains("[ci skip]")
-                        || title.contains("[skip ci]")
-                        || title.contains("[wip]");
+                Pattern p = Pattern.compile("\\[(wip|ci[ -_]skip|skip[ -_]ci)\\]", Pattern.CASE_INSENSITIVE);
+                return p.matcher(title).find();
             }
 
             return false;
