@@ -6,9 +6,6 @@ import hudson.scm.SCMDescriptor;
 
 import jenkins.scm.api.SCMHead;
 import jenkins.scm.api.trait.*;
-import jenkins.scm.api.trait.SCMBuilder;
-import jenkins.scm.api.trait.SCMSourceContext;
-import jenkins.scm.api.trait.SCMSourceRequest;
 
 import org.jenkinsci.plugins.github_branch_source.GitHubSCMBuilder;
 import org.jenkinsci.plugins.github_branch_source.GitHubSCMSourceRequest;
@@ -102,10 +99,7 @@ public class GitHubPullRequestSkipTrait extends SCMSourceTrait {
                 int prNumber = Integer.parseInt(scmHead.getName().substring(3));
 
                 GHPullRequest pull = repository.getPullRequest(prNumber);
-                String title = pull.getTitle().toLowerCase();
-
-                Pattern p = Pattern.compile("\\[(wip|ci[ -_]skip|skip[ -_]ci)\\]", Pattern.CASE_INSENSITIVE);
-                return p.matcher(title).find();
+                return pull.getTitle().toLowerCase().matches(".*\\[(wip|ci[ -_]skip|skip[ -_]ci)\\].*");
             }
 
             return false;
