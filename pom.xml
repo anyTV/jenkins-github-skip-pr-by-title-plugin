@@ -7,18 +7,24 @@
         <version>2.33</version>
         <relativePath />
     </parent>
-    <artifactId>jenkins-github-skip-pr-by-title</artifactId>
+    <artifactId>github-skip-pr-by-title</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>hpi</packaging>
-    <name>GitHub Skip PR by Title</name>
+    <name>GitHub Skip PR by Title Plugin</name>
     <description>Ignore GitHub pull requests based on PR Title.</description>
-    <url>https://wiki.jenkins-ci.org/display/JENKINS/TODO+Plugin</url>
+    <url>https://wiki.jenkins-ci.org/display/JENKINS/GitHub+Skip+PR+by+Title+Plugin</url>
     <licenses>
         <license>
             <name>MIT License</name>
             <url>http://opensource.org/licenses/MIT</url>
         </license>
     </licenses>
+
+    <scm>
+        <connection>scm:git:ssh://github.com/jenkinsci/github-skip-pr-by-title-plugin.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/jenkinsci/github-skip-pr-by-title-plugin.git</developerConnection>
+        <url>https://github.com/jenkinsci/github-skip-pr-by-title-plugin</url>
+    </scm>
 
     <properties>
         <jenkins.version>2.73.2</jenkins.version>
