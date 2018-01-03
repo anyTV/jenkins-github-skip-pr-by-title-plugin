@@ -9,8 +9,9 @@ Jenkins plugin for ignoring GitHub pull requests based on PR title.
 > See [Jenkins Plugin Tutorial][plugin-tutorial] for more information
 
 1. Install [Maven 3](https://maven.apache.org) and JDK 8.0 or later.
-1. Add the following to your `~/.m2/settings.xml` (Windows users will find them
- in `%USERPROFILE%\.m2\settings.xml`):
+1. Add the following XML to your `~/.m2/settings.xml` (Windows users will find
+them in `%USERPROFILE%\.m2\settings.xml`). Create the file if it does not
+exist.
 
 ```XML
 <settings>
@@ -51,13 +52,16 @@ Jenkins plugin for ignoring GitHub pull requests based on PR title.
 
 ### Building
 
-To build the plugin, run `mvn package` while inside the repository directory on
-the terminal. A `.hpi` file will be created inside the `target/` directory.
+Download the files or clone this repository on your machine. Open the directory
+of the files on your terminal. Run `mvn package` on the terminal, and
+`github-skip-pr-by-title.hpi` will be created inside the `target/` directory.
+
+### Installation
 
 To install the plugin:
 1. Navigate to the *Manage Jenkins* > *Manage Plugins* page in the web UI.
 1. Click on the *Advanced* tab.
-1. Choose the `.hpi` file under the *Upload Plugin* section.
+1. Choose `github-skip-pr-by-title.hpi` under the *Upload Plugin* section.
 1. *Upload* the plugin file
 ![][upload-plugin]
 
@@ -85,11 +89,23 @@ This plugin works best with these settings for branch discovery:
 
 ## Running the tests
 
-Run `mvn test` while inside the repository directory on the terminal.
+Open the directory of the files on your terminal then run `mvn test`.
 
-## Deployment
+## Debugging
 
-Add additional notes about how to deploy this on a live system
+Open the directory of the files on your terminal then run the following:
+```
+mvn hpi:run 
+```
+
+You can open Jenkins web UI at http://localhost:8080/jenkins once "Jenkins is
+fully up and running" is logged on the terminal. The Jenkins instance will have
+the plugin installed by default.
+
+If you want to run it on a specific port, run the following instead:
+```
+mvn hpi:run -Djetty.port=<PORT>
+```
 
 ## Built With
 
