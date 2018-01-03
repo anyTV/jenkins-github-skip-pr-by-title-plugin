@@ -11,13 +11,11 @@ import org.jenkinsci.plugins.github_branch_source.GitHubSCMBuilder;
 import org.jenkinsci.plugins.github_branch_source.GitHubSCMSourceRequest;
 import org.jenkinsci.plugins.github_branch_source.PullRequestSCMHead;
 
-import org.kohsuke.github.GHPullRequest;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
-import java.util.regex.Pattern;
 
 
 public class GitHubPullRequestSkipTrait extends SCMSourceTrait {
@@ -98,8 +96,8 @@ public class GitHubPullRequestSkipTrait extends SCMSourceTrait {
                 // name for pull requests are formatted as "PR-<number>"
                 int prNumber = Integer.parseInt(scmHead.getName().substring(3));
 
-                GHPullRequest pull = repository.getPullRequest(prNumber);
-                return pull.getTitle().toLowerCase().matches(".*\\[(wip|ci[ -_]skip|skip[ -_]ci)\\].*");
+                String prTitle = repository.getPullRequest(prNumber).getTitle();
+                return prTitle.matches("(?i).*\\[(wip|ci[ -_]skip|skip[ -_]ci)\\].*");
             }
 
             return false;
