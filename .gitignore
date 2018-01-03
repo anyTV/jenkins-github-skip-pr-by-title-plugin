@@ -3,9 +3,12 @@
 .classpath
 .project
 .settings
+*.iml
+
+
+### Jenkins ###
 work
 bin
-*.iml
 
 
 ### Maven ###
