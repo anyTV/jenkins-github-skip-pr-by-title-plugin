@@ -1,3 +1,17 @@
+### IntelliJ IDEA ###
+.idea
+.classpath
+.project
+.settings
+*.iml
+
+
+### Jenkins ###
+work
+bin
+
+
+### Maven ###
 target/
 pom.xml.tag
 pom.xml.releaseBackup
